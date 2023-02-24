@@ -1,65 +1,52 @@
-// Program for Nth node from the end of a Linked List
 import java.util.LinkedList;
-
-import javax.swing.plaf.synth.SynthLookAndFeel;
 public class nthNodeOfTheLinkedList {
-    private class ListNode
-	    {
-	        int value;
-	        ListNode next;
-	
-	        ListNode(int value)
-	        {
-	            this.value = value;
-	        }
-	    }
-	    
-	    ListNode head;
-	    ListNode tail;
-	    public void findNthFromEnd(ListNode head,int n)
-	    {
-	        ListNode node1 = head, node2 = head;
-	        
-	        int count = 1;
-	        	         
-	        while (node1 != null)
-	        {
-	            if (count == (n+1))  
-	            {
-	                break;
-	            }
-	            
-	            count += 1;
-	            node1 = node1.next;
-	        }
-	        if (count == (n+1))
-	        {
-	            while (node1 != null)
-	            {
-	                node1 = node1.next;
-	                node2 = node2.next;
-	            }
-	            // return node2.value;
-                System.out.print(node2.value);
-	        }
-	        
-	    }
-        public void push(int value)
-        {
-            ListNode new_node = new ListNode(value);
-            new_node.next = head;
-            head = new_node;
+    Node head;
+
+    static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            next = null;
         }
-	    public static void main(String[] args) 
-	    {
-	        LinkedList lList = new LinkedList();
-            lList.push(10);
-	        lList.push(20);
-	        lList.push(30);
-            lList.push(40);
-            lList.push(50);
-	        
-	        lList.findNthFromEnd(lList,2);
     }
-    
+
+    void printNthFromLast(int n) {
+        Node ptr1 = head;
+        Node ptr2 = head;
+
+        int count = 0;
+        while (count < n) {
+            if (ptr2 == null) {
+                System.out.println(n + " is greater than the number of nodes in the list");
+                return;
+            }
+            ptr2 = ptr2.next;
+            count++;
+        }
+
+        while (ptr2 != null) {
+            ptr1 = ptr1.next;
+            ptr2 = ptr2.next;
+        }
+
+        System.out.println("Node at position " + n + " from end is " + ptr1.data);
+    }
+
+    public static void main(String[] args) {
+        LinkedList linkedList = new LinkedList();
+        linkedList.head = new Node(1);
+        Node second = new Node(2);
+        Node third = new Node(3);
+        Node fourth = new Node(4);
+        Node fifth = new Node(5);
+
+        linkedList.head.next = second;
+        second.next = third;
+        third.next = fourth;
+        fourth.next = fifth;
+
+        linkedList.printNthFromLast(2);
+    }
 }
